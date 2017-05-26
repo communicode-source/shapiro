@@ -23,8 +23,11 @@ class feedTesting:
            distance = 0
            for x in range(length):
                distance += pow((trainingInstance[x] - testInstance[x]), 2)
-
-           return 1- (math.sqrt(distance) *.1)
+           if distance == 0:
+                   return 1
+           else:
+                   return 1- (math.sqrt(distance) *.1)
+        
 
 
 
@@ -67,24 +70,28 @@ class feedTesting:
                     completeAff = neighbors[0][x][1] * localAff
 
                     if x == 0:
-                            distances[y] = (distances[y][0], localAff, completeAff, x)
+                            distances[y] = (distances[y][0], localAff, completeAff, x, y)
                     else:
-                            distances.append((distances[y][0], localAff, completeAff, x))
+                            distances.append((distances[y][0], localAff, completeAff, x, y))
 
-               distances.sort(key=operator.itemgetter(1), reverse = True)
+            distances.sort(key=operator.itemgetter(1), reverse = True)
                
-            for x in range(len(neighbors[0])):
+            yIndex = []      
+            for x in range(len(neighbors[0])):   
                     count = 0
                     index = 0
-                    
+
                     while count < k:
-                        if distances[index][3] == x:
+                        cont = True 
+                        for i in range(len(yIndex)):
+                                if distances[index][4] == yIndex[i]:
+                                        cont = False
+                        if distances[index][3] == x and cont == True:
                                 tempDist.append(distances[index])
-                                distances.pop(index)
+                                yIndex.append(distances[index][4])
                                 
                                 count += 1
-                        else:
-                                index += 1
+                        index += 1
                                                         
             neighbors.append((tempDist))
 
