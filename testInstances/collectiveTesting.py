@@ -44,7 +44,7 @@ prefConv.transferData("testfile.data", variables, "data.json")
 #feedTesting declaration and method calls
 feedtesting = feedTesting(testInstance)
 feedtesting.loadDataSet(ran, 'testfile.data')
-neighbors = feedtesting.findNeighbors(k)
+neighbors = feedtesting.findNeighbors(k, 2)
 print "\nNeighbors\n"
 for x in range(len(neighbors)):
     print neighbors[x], "\n"

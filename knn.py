@@ -46,7 +46,7 @@ class feedTesting:
         is used due to inefficiencies with index popping.
         """
 
-        def findNeighbors(self, k):
+        def findNeighbors(self, k, edges):
                 distances = []
                 for x in range(len(self.training)):
                         arrIndex = x
@@ -61,44 +61,45 @@ class feedTesting:
                         neighbors[0].append(distances[0])
                         distances.pop(0)
                         iterator += 1
-        
-                #2nd Edge
-                tempDist = []
-                for i in range(len(neighbors[0])):
-                #Removes the previously declared neighbor values before
-                        for j in range(len(distances)):
-                                #All distances for both neighbors are saved to the same array, just organized with an additional X value alongside their original Y index
-                                localAff = feedTesting.euclideanDistance(distances[j][0], neighbors[0][i][0], len(self.testInstance)-1)
-                                completeAff = neighbors[0][i][1] * localAff
+
+                distancesOrig = distances
+                yIndex = []         
+                for i in range(edges):
+                        #2nd Edge
+                        tempDist = []
+                        distances = []
                         
-                                #replaces the previously declared distance variables from the first edge
-                                if i == 0:
-                                        distances[j] = (distances[j][0], localAff, completeAff, i, j)
-                                #appends to the distances array as the second round of neighboring
-                                else:
-                                        distances.append((distances[j][0], localAff, completeAff, i, j))
+                        for j in range(len(neighbors[i])):
+                                #Removes the previously declared neighbor values before
+                                for x in range(len(distancesOrig)):
+                                        #All distances for both neighbors are saved to the same array, just organized with an additional X value alongside their original Y index
+                                        localAff = feedTesting.euclideanDistance(distancesOrig[x][0], neighbors[i][j][0], len(self.testInstance)-1)
+                                        if i == 0:
+                                                completeAff = neighbors[0][j][1] * localAff
+                                        else:
+                                                completeAff = neighbors[i][j][2] * localAff
+                                        distances.append((distancesOrig[x][0], localAff, completeAff, j, x))
         
-                distances.sort(key=operator.itemgetter(1), reverse = True)
+                        distances.sort(key=operator.itemgetter(1), reverse = True)
 
-                #yIndex marks all already used distance values (reduces overlap)   
-                yIndex = []      
-                for i in range(len(neighbors[0])):
-                        count = 0
-                        index = 0
+                        #yIndex marks all already used distance values (reduces overlap)    
+                        for i in range(len(neighbors[i])):
+                                count = 0
+                                index = 0
 
-                        while count < k:
-                                cont = True 
-                                for j in range(len(yIndex)):
-                                        if distances[index][4] == yIndex[j]:
-                                                cont = False
-                                if distances[index][3] == i and cont == True:
-                                        tempDist.append(distances[index])
-                                        yIndex.append(distances[index][4])
+                                while count < k:
+                                        cont = True 
+                                        for j in range(len(yIndex)):
+                                                if distances[index][4] == yIndex[j]:
+                                                        cont = False
+                                        if distances[index][3] == i and cont == True:
+                                                tempDist.append(distances[index])
+                                                yIndex.append(distances[index][4])
                                 
-                                        count += 1
-                                index += 1
+                                                count += 1
+                                        index += 1
 
-                neighbors.append((tempDist))
+                        neighbors.append((tempDist))
 
                 return neighbors
         
