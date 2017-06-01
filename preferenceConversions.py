@@ -24,7 +24,7 @@ class prefConv:
 
         #adds all of the variables within the given collection to the collectionVariables array
         for i in range(len(collections)):
-            for j in range(1, len(collections[x])):
+            for j in range(1, len(collections[i])):
                 if collections[i][0] == collectionTitle:
                     for k in range(len(binaryValues)):
                         if binaryValues[k][0] == collections[i][j][0] and binaryValues[k][1] == 1:
@@ -33,7 +33,7 @@ class prefConv:
         #begins the determinance of the externality quantities (future examinance of the process necessary)
         for i in range(len(collections)):
             for j in range(1, len(collections[i])):
-                tempTitle = collections[i][y][0]
+                tempTitle = collections[i][j][0]
                 for k in range(len(collectionVariables)):
                     if collections[i][0] != collectionTitle and collectionVariables[k] == collections[i][j][0]:
                         externality += collections[i][j][1]
@@ -50,7 +50,7 @@ class prefConv:
     #variable transfer towards 'filename'
     @staticmethod
     def transferData(filename, variables, datafile):
-        with open(filename, 'aw+') as file:
+        with open(filename, 'r+') as file:
             for i in range(len(variables)):
                 file.write(str(variables[i][1])+", ")
             file.write(prefConv.getNonprofitId("data.json")+"\n")
@@ -74,7 +74,7 @@ class prefConv:
         #SUBJECT TO INEFFINCIES
         for i in range(len(self.collections)):
             weight = 0
-            for j in range(1, len(self.collections[x])-1):
+            for j in range(1, len(self.collections[i])-1):
                 found = False
                 index = 0
 

@@ -35,7 +35,7 @@ class feedTesting:
                                 #change the range value depending on the amount of variables being considered
                                 for j in range(dataValTotal):
                                         dataset[i][j] = float(dataset[i][j])
-                                        trainingSet.append(dataset[i])
+                                trainingSet.append(dataset[i])
                 self.training = trainingSet
                        
         """
@@ -56,9 +56,11 @@ class feedTesting:
                 distances.sort(key=operator.itemgetter(1), reverse = True)
                 neighbors = [[]]
 
-                for range(k):
+                iterator = 0
+                while iterator < k:
                         neighbors[0].append(distances[0])
                         distances.pop(0)
+                        iterator += 1
         
                 #2nd Edge
                 tempDist = []
@@ -98,5 +100,5 @@ class feedTesting:
 
                 neighbors.append((tempDist))
 
-            return neighbors
+                return neighbors
         
