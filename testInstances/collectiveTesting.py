@@ -26,7 +26,7 @@ categories = ["parks_and_recreation", "environment1", "science", "wildlife", "pr
 ran = 10
 k = 2
 
-testInstance = [3,3,3,3,3,3,3,3,3,3]
+testInstance = [0,0,0,0,0,0,0,0,0,0]
 
 #preferenceConversion declaration and method calls
 prefconv = prefConv(collections, categories)

@@ -83,16 +83,17 @@ class feedTesting:
                         distances.sort(key=operator.itemgetter(1), reverse = True)
 
                         #yIndex marks all already used distance values (reduces overlap)    
-                        for i in range(len(neighbors[i])):
+                        for j in range(len(neighbors[i])):
                                 count = 0
                                 index = 0
 
                                 while count < k:
                                         cont = True 
-                                        for j in range(len(yIndex)):
-                                                if distances[index][4] == yIndex[j]:
+                                        for x in range(len(yIndex)):
+                                                if distances[index][4] == yIndex[x]:
                                                         cont = False
-                                        if distances[index][3] == i and cont == True:
+                                                        break
+                                        if distances[index][3] == j and cont == True:
                                                 tempDist.append(distances[index])
                                                 yIndex.append(distances[index][4])
                                 
