@@ -64,13 +64,13 @@ class feedTesting:
                 tempDist = []
                 for i in range(len(neighbors[0])):
                 #Removes the previously declared neighbor values before
-                        for y in range(len(distances)):
+                        for j in range(len(distances)):
                                 #All distances for both neighbors are saved to the same array, just organized with an additional X value alongside their original Y index
                                 localAff = feedTesting.euclideanDistance(distances[j][0], neighbors[0][i][0], len(self.testInstance)-1)
                                 completeAff = neighbors[0][i][1] * localAff
                         
                                 #replaces the previously declared distance variables from the first edge
-                                if x == 0:
+                                if i == 0:
                                         distances[j] = (distances[j][0], localAff, completeAff, i, j)
                                 #appends to the distances array as the second round of neighboring
                                 else:
