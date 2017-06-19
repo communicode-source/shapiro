@@ -3,6 +3,7 @@ sys.path.append("../")
 import preferenceConversions, knn
 from preferenceConversions import prefConv
 from knn import feedTesting
+import json
 
 #variables
 collections = [ ["environmentalism", ["environment", .4], ["wildlife", .1], ["preservation", .1], ["international", .05], ["health", .05], ["legal", .05] ],
@@ -23,6 +24,53 @@ categories = ["parks_and_recreation", "environment1", "science", "wildlife", "pr
               "religion", "war_relief", "peace_efforts", "poverty_support", "legal", "design",
               "research", "disease", "fundraising", "finance", "trade", "historical"]
 
+binValues = {
+    "interests" : {
+        "parks_and_recreation": "0",
+        "environment1": "1",
+        "science": "0",
+        "wildlife": "0",
+        "preservation": "0",
+        "human_services": "1",
+        "civil_rights": "1",
+        "arts_and_culture": "1",
+        "education": "0",
+        "engineering": "0",
+        "mathematics": "0",
+        "technology": "0",
+        "food_services": "0",
+        "urban_management": "1",
+        "business_and_marketing": "1",
+        "international": "0",
+        "criminal":  "0",
+        "athletics": "0",
+        "internet": "0",
+        "health": "0",
+        "public_safety": "1",
+        "youth_aid": "1",
+        "construction": "1",
+        "tv_and_media": "1",
+        "religion": "1",
+        "war_relief": "0",
+        "peace_efforts": "0",
+        "poverty_support": "0",
+        "legal": "0",
+        "design": "0",
+        "research": "0",
+        "disease": "0",
+        "fundraising": "1",
+        "finance": "1",
+        "trade": "0",
+        "historical": "1"
+    }
+}
+
+binValues = json.dumps(binValues)
+
+"""
+for a in binValues["interests"]:
+    print a, binValues["interests"][a]"""
+
 ran = 10
 k = 2
 
@@ -30,7 +78,6 @@ testInstance = [0,0,0,0,0,0,0,0,0,0]
 
 #preferenceConversion declaration and method calls
 prefconv = prefConv(collections, categories)
-binValues = prefconv.binValues("data.json")
 print "Binary Values\n"
 print binValues, "\n"
 
