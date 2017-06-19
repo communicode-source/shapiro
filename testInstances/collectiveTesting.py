@@ -25,44 +25,24 @@ categories = ["parks_and_recreation", "environment1", "science", "wildlife", "pr
               "research", "disease", "fundraising", "finance", "trade", "historical"]
 
 binValues = {
-    "interests" : {
-        "parks_and_recreation": "0",
-        "environment1": "1",
-        "science": "0",
-        "wildlife": "0",
-        "preservation": "0",
-        "human_services": "1",
-        "civil_rights": "1",
-        "arts_and_culture": "1",
-        "education": "0",
-        "engineering": "0",
-        "mathematics": "0",
-        "technology": "0",
-        "food_services": "0",
-        "urban_management": "1",
-        "business_and_marketing": "1",
-        "international": "0",
-        "criminal":  "0",
-        "athletics": "0",
-        "internet": "0",
-        "health": "0",
-        "public_safety": "1",
-        "youth_aid": "1",
-        "construction": "1",
-        "tv_and_media": "1",
-        "religion": "1",
-        "war_relief": "0",
-        "peace_efforts": "0",
-        "poverty_support": "0",
-        "legal": "0",
-        "design": "0",
-        "research": "0",
-        "disease": "0",
-        "fundraising": "1",
-        "finance": "1",
-        "trade": "0",
-        "historical": "1"
-    }
+    "interests" : [
+        "environment1",
+        "human_services",
+        "civil_rights",
+        "arts_and_culture",
+        "urban_management",
+        "business_and_marketing",
+        "public_safety",
+        "youth_aid",
+        "construction",
+        "tv_and_media",
+        "religion",
+        "fundraising",
+        "finance",
+        "historical",
+        "science",
+        "international"
+   ]
 }
 
 binValues = json.dumps(binValues)

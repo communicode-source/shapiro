@@ -27,17 +27,15 @@ class prefConv:
             for j in range(1, len(collections[i])):
                 if collections[i][0] == collectionTitle:
                     for k in binaryValues["interests"]:
-                        if k == collections[i][j][0] and int(binaryValues["interests"][k]) == 1:
+                        if str(k) == collections[i][j][0]:
                             collectionVariables.append(collections[i][j][0])
     
         #begins the determinance of the externality quantities (future examinance of the process necessary)
         for i in range(len(collections)):
             for j in range(1, len(collections[i])):
-                tempTitle = collections[i][j][0]
                 for k in range(len(collectionVariables)):
                     if collections[i][0] != collectionTitle and collectionVariables[k] == collections[i][j][0]:
                         externality += collections[i][j][1]
-        print math.sqrt(externality * .15)
         return math.sqrt(externality * .15)
 
     #returns nonprofitId from json
@@ -68,14 +66,9 @@ class prefConv:
         for i in range(len(self.collections)):
             weight = 0
             for j in range(1, len(self.collections[i])):
-                found = False
-                val = 0
-
-            
                 for k in binValues["interests"]:
-                    if self.collections[i][j][0] == k:
-                        val = binValues["interests"][k]
-                weight += self.collections[i][j][1] * int(val)
-                weight += prefConv.findExternalities(self.collections, self.collections[i][0], binValues)
+                    if self.collections[i][j][0] == str(k):
+                        weight += self.collections[i][j][1]
+                        weight += prefConv.findExternalities(self.collections, self.collections[i][0], binValues)
             values.append((self.collections[i][0], weight))
         return values
