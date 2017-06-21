@@ -111,7 +111,7 @@ k = 2
 testInstance = [0,0,0,0,0,0,0,0,0,0]
 
 #preferenceConversion declaration and method calls
-prefconv = prefConv(collections, categories)
+prefconv = prefConv(collections)
 print "Binary Values\n"
 print binValues, "\n"
 

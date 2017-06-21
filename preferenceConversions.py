@@ -6,13 +6,11 @@ import json
 class prefConv:
 
     collections = []
-    categories = []
     binValues = []
     variables = []
 
-    def __init__(self, collections, categories):
+    def __init__(self, collections):
         prefConv.collections = collections
-        prefConv.categories = categories
 
 #STATIC METHODS
 
@@ -27,7 +25,7 @@ class prefConv:
             for j in binaryValues["interests"]:
                 if str(j) == i:
                     collectionVariables.append(i)
-    ###########
+                    
         #begins the determinance of the externality quantities (future examinance of the process necessary)
         for i in collections:
             if i != collectionTitle:
