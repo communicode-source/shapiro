@@ -26,7 +26,12 @@ class feedTesting:
         Converts filename.data into a
         usable trainingSet array
         """
-        
+        def setTraining(self, dataset):
+                temp = []
+                for i in dataset:
+                        temp.append(i["preferences"])
+                self.training = temp
+
         def loadDataSet(self, dataValTotal, filename, trainingSet=[]):
                 with open(filename, 'rb') as csvfile:
                         lines = csv.reader(csvfile)
@@ -57,50 +62,52 @@ class feedTesting:
                 neighbors = [[]]
 
                 iterator = 0
-                while iterator < k:
-                        neighbors[0].append(distances[0])
-                        distances.pop(0)
-                        iterator += 1
+                for i in range(k):
+                        neighbors[0].append(distances[i])
+                        distances[i] = None
 
                 distancesOrig = distances
                 yIndex = []         
                 for i in range(edges):
                         #2nd Edge
-                        tempDist = []
+                        newNeighbors = []
                         distances = []
                         
                         for j in range(len(neighbors[i])):
                                 #Removes the previously declared neighbor values before
                                 for x in range(len(distancesOrig)):
                                         #All distances for both neighbors are saved to the same array, just organized with an additional X value alongside their original Y index
-                                        localAff = feedTesting.euclideanDistance(distancesOrig[x][0], neighbors[i][j][0], len(self.testInstance)-1)
-                                        if i == 0:
-                                                completeAff = neighbors[0][j][1] * localAff
-                                        else:
-                                                completeAff = neighbors[i][j][2] * localAff
-                                        distances.append((distancesOrig[x][0], localAff, completeAff, j, x))
+                                        if distancesOrig[x] != None:
+                                                localAff = feedTesting.euclideanDistance(distancesOrig[x][0], neighbors[i][j][0], len(self.testInstance)-1)
+                                                if i == 0:
+                                                        completeAff = neighbors[0][j][1] * localAff
+                                                else:
+                                                        completeAff = neighbors[i][j][2] * localAff
+                                                distances.append((distancesOrig[x][0], localAff, completeAff, j, x))
         
                         distances.sort(key=operator.itemgetter(1), reverse = True)
 
                         #yIndex marks all already used distance values (reduces overlap)    
+                        excludeIndexes = []
                         for j in range(len(neighbors[i])):
                                 count = 0
                                 index = 0
 
                                 while count < k:
-                                        cont = True 
-                                        for x in range(len(yIndex)):
-                                                if distances[index][4] == yIndex[x]:
+                                        
+                                        cont = True
+                                        for l in range(len(excludeIndexes)):
+                                                if distances[index][4] == excludeIndexes[l]:
                                                         cont = False
-                                                        break
+
                                         if distances[index][3] == j and cont == True:
-                                                tempDist.append(distances[index])
-                                                yIndex.append(distances[index][4])
-                                
+                                                newNeighbors.append(distances[index])
+                                                excludeIndexes.append(distances[index][4])
+                                                distancesOrig[distances[index][4]] = None
                                                 count += 1
                                         index += 1
 
-                        neighbors.append((tempDist))
+                        neighbors.append((newNeighbors))
 
                 return neighbors
         

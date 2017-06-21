@@ -3,6 +3,8 @@ sys.path.append("../")
 import preferenceConversions, knn
 from preferenceConversions import prefConv
 from knn import feedTesting
+sys.path.append("../mongo")
+from mongo import mongo
 import json
 
 #variables
@@ -108,7 +110,7 @@ binValues = json.dumps(binValues)
 ran = 10
 k = 2
 
-testInstance = [0,0,0,0,0,0,0,0,0,0]
+testInstance = [1,0,0,0,0,0,0,0,0,0]
 
 #preferenceConversion declaration and method calls
 prefconv = prefConv(collections)
@@ -121,10 +123,13 @@ print variables
 
 prefConv.transferData("testfile.data", variables, "data.json")
 
+mongo = mongo("preferences", "nonprofit")
+training = mongo.find()
+
 #feedTesting declaration and method calls
 feedtesting = feedTesting(testInstance)
-feedtesting.loadDataSet(ran, 'testfile.data')
-neighbors = feedtesting.findNeighbors(k, 2)
+feedtesting.setTraining(training)
+neighbors = feedtesting.findNeighbors(k, 1)
 print "\nNeighbors\n"
 for x in range(len(neighbors)):
     print neighbors[x], "\n"
