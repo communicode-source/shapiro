@@ -113,11 +113,11 @@ k = 2
 testInstance = [1,0,0,0,0,0,0,0,0,0]
 
 #preferenceConversion declaration and method calls
-prefconv = prefConv(collections)
+prefconv = prefConv(collections, binValues)
 print "Binary Values\n"
 print binValues, "\n"
 
-variables = prefconv.weightsToVals(binValues)
+variables = prefconv.weightsToVals()
 print "Converted Variables\n"
 print variables
 

@@ -69,7 +69,6 @@ class feedTesting:
                 distancesOrig = distances
                 yIndex = []         
                 for i in range(edges):
-                        #2nd Edge
                         newNeighbors = []
                         distances = []
                         
