@@ -83,13 +83,13 @@ class prefConv:
     """
 
     def weightsToVals(self):
-        values = []
+        values = {}
         for collection in self.collections:
             weight = 0
             for variable in self.collections[collection]:
                 for interest in self.interests["interests"]:
                     weight += self.checkInterest(collection, variable, interest)
-            values.append((collection, weight))
+            values[collection] = weight
         return values
 
     def checkInterest(self, collection, variable, interest):

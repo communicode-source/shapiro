@@ -2,7 +2,7 @@ from mongo import mongo
 
 post = {
 "nonprofitId" : 12321415215,
-"preferences" : [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+"preferences" : [2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 }
 
 mongo = mongo("preferences", "nonprofit")

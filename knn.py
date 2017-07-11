@@ -17,7 +17,7 @@ class feedTesting:
         @staticmethod
         def euclideanDistance(trainingInstance, testInstance, length):
                 distance = 0
-                for i in range(length):
+                for i in range(length+1):
                         distance += pow((trainingInstance[i] - testInstance[i]), 2)
                 return 1- (math.sqrt(distance) *.1)
 
@@ -66,8 +66,7 @@ class feedTesting:
                         neighbors[0].append(distances[i])
                         distances[i] = None
 
-                distancesOrig = distances
-                yIndex = []         
+                distancesOrig = distances       
                 for i in range(edges):
                         newNeighbors = []
                         distances = []

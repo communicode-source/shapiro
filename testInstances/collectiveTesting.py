@@ -110,7 +110,20 @@ binValues = json.dumps(binValues)
 ran = 10
 k = 2
 
-testInstance = [1,0,0,0,0,0,0,0,0,0]
+testingTestInstance = {
+  'environmentalism' : 1,
+  'human_services' : 0,
+  'stem' : 0,
+  'health' : 0,
+  'the_arts' : 0,
+  'education' : 0,
+  'business' : 0,
+  'urban_planning' : 0, 
+  'international' : 0,
+  'legal' : 1
+}
+
+testInstance = [2,0,0,0,1,0,0,0,0,1]
 
 #preferenceConversion declaration and method calls
 prefconv = prefConv(collections, binValues)
@@ -121,7 +134,7 @@ variables = prefconv.weightsToVals()
 print "Converted Variables\n"
 print variables
 
-prefConv.transferData("testfile.data", variables, "data.json")
+#prefConv.transferData("testfile.data", variables, "data.json")
 
 mongo = mongo("preferences", "nonprofit")
 training = mongo.find()

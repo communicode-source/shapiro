@@ -15,7 +15,6 @@ class mongo:
 		self.collection = self.db.collection_name
 
 	def insert_one(self, post):
-		self.collection = self.db.collection_name
 		post_id = self.collection.insert_one(post).inserted_id
 		return post_id
 
@@ -24,4 +23,9 @@ class mongo:
 
 	def find_one(self, targetValues):
 		return self.collection.find_one(targetValues)
+
+	def authenticate(name = None, password = None, source = None, mechanism = 'DEFAULT', **kwargs):
+		db.authenticate(name, password, source, mechanism, **kwargs)
+
+
 
