@@ -5,39 +5,23 @@ import json
 #CLASS START
 class prefConv:
 
-    collections = []
-    interests = []
-    variables = []
+    """
+    GLOBAL VARIABLES:
+    collections = Dict
+    interests = Dict
+    """
 
     def __init__(self, collections, interests):
         self.collections = collections
         self.interests = self.loadJson(interests)
-
-#STATIC METHODS
 
     @staticmethod
     def loadJson(obj):
         jsonStr = obj.decode("utf-8")
         return json.loads(jsonStr)
 
-    #only here temporarily
-    @staticmethod
-    def transferData(filename, variables, datafile):
-        with open(filename, 'r+') as file:
-            for i in range(len(variables)):
-                file.write(str(variables[i][1])+", ")
-
-    #adds all of the variables within the given collection to the collectionVariables array
-    def findCollectionVariables(self, collectionTitle):
-        collectionVariables = []
-        for variable in self.collections[collectionTitle]:
-            for interest in self.interests["interests"]:
-                if str(interest) == variable:
-                    collectionVariables.append(variable)
-        return collectionVariables
-
     """
-    Following 5 methods are involved in the findExternalities process.
+    Following 6 methods are involved in the findExternalities process.
     The function collects all variables within the current collection
     that overlap with those of other collections, adding up the 
     weights of those specifically. This will amplify all final
@@ -47,6 +31,14 @@ class prefConv:
     def findExternalities(self, collectionTitle):
         collectionVariables = self.findCollectionVariables(collectionTitle)
         return math.sqrt(self.createExternalities(collectionTitle, collectionVariables) * .15)
+
+    def findCollectionVariables(self, collectionTitle):
+        collectionVariables = []
+        for variable in self.collections[collectionTitle]:
+            for interest in self.interests["interests"]:
+                if str(interest) == variable:
+                    collectionVariables.append(variable)
+        return collectionVariables
 
     def createExternalities(self, collectionTitle, collectionVariables):
         externality = 0

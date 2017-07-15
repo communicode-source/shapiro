@@ -88,7 +88,7 @@ categories = ["parks_and_recreation", "environment1", "science", "wildlife", "pr
               "research", "disease", "fundraising", "finance", "trade", "historical"]
 
 binValues = {
-    "nonprofitId" : 132142,
+    "nonprofitId" : 132143213,
     "interests" : [
         "environment1",
         "human_services",
@@ -102,10 +102,6 @@ binValues = {
         "tv_and_media",
         "religion",
         "fundraising",
-        "finance",
-        "historical",
-        "science",
-        "international"
    ]
 }
 
@@ -149,4 +145,4 @@ feed = feed(testingTestInstance, training, order)
 neighbors = feed.knn(k=5)
 print "\nNeighbors\n"
 for x in neighbors:
-    print x, "\n"
+    print "NonprofitId: {}, Affinity: {}".format(x, neighbors[x])
