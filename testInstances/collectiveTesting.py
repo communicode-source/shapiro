@@ -2,12 +2,15 @@ import sys
 sys.path.append("../")
 import preferenceConversions, knn
 from preferenceConversions import prefConv
-from knn import feedTesting
+from knn import feed
 sys.path.append("../mongo")
 from mongo import mongo
 import json
 
 #variables
+
+order = ["environmentalism", "human_services", "stem", "health", "the_arts", "education", "business", "urban_planning", "international", "legal"]
+
 collections = { 'environmentalism' : { 'environment' : .4,
                                        'wildlife' : .1,
                                        'preservation' : .1,
@@ -85,6 +88,7 @@ categories = ["parks_and_recreation", "environment1", "science", "wildlife", "pr
               "research", "disease", "fundraising", "finance", "trade", "historical"]
 
 binValues = {
+    "nonprofitId" : 1234,
     "interests" : [
         "environment1",
         "human_services",
@@ -107,20 +111,20 @@ binValues = {
 
 binValues = json.dumps(binValues)
 
-ran = 10
-k = 2
-
 testingTestInstance = {
-  'environmentalism' : 1,
-  'human_services' : 0,
-  'stem' : 0,
-  'health' : 0,
-  'the_arts' : 0,
-  'education' : 0,
-  'business' : 0,
-  'urban_planning' : 0, 
-  'international' : 0,
-  'legal' : 1
+  "preferences" : {
+    'environmentalism' : 1,
+    'human_services' : 0,
+    'stem' : 0,
+    'health' : 0,
+    'the_arts' : 0,
+    'education' : 0,
+    'business' : 0,
+    'urban_planning' : 0, 
+    'international' : 0,
+    'legal' : 1
+    },
+  "nonprofitId" : 123241
 }
 
 testInstance = [2,0,0,0,1,0,0,0,0,1]
@@ -136,13 +140,13 @@ print variables
 
 #prefConv.transferData("testfile.data", variables, "data.json")
 
-mongo = mongo("preferences", "nonprofit")
+mongo = mongo("test", "nonprofit")
+mongo.insert_one(variables)
 training = mongo.find()
 
 #feedTesting declaration and method calls
-feedtesting = feedTesting(testInstance)
-feedtesting.setTraining(training)
-neighbors = feedtesting.findNeighbors(k, 1)
+feed = feed(testingTestInstance, training, order)
+neighbors = feed.knn(k=2)
 print "\nNeighbors\n"
-for x in range(len(neighbors)):
-    print neighbors[x], "\n"
+for x in neighbors:
+    print x, "\n"

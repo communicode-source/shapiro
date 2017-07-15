@@ -90,11 +90,19 @@ class prefConv:
                 for interest in self.interests["interests"]:
                     weight += self.checkInterest(collection, variable, interest)
             values[collection] = weight
-        return values
+        return self.formatInterests(values)
 
     def checkInterest(self, collection, variable, interest):
         if variable == str(interest):
             return self.collections[collection][variable] + self.findExternalities(collection)
         elif variable != str(interest):
             return 0
+
+    def formatInterests(self, values):
+        submission = {}
+        submission["nonprofitId"] = self.interests["nonprofitId"]
+        submission["preferences"] = values
+        return submission
+
+
 

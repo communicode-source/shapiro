@@ -3,21 +3,26 @@ import math
 import operator
 
 #CLASS START
-class feedTesting:
+class feed:
         
-        training = []
-        testInstance = []
+        """
+        GLOBAL VARIABLES: 
+        order - List
+        training - Dict
+        testInstance - Dict
+        """
 
-        def __init__(self, testInstance):
+        def __init__(self, testInstance, training, order):
+                self.order = order
+                self.training = training
                 self.testInstance = testInstance
 
 #STATIC METHODS
 
         #sqr(sums of (differences squared))        
-        @staticmethod
-        def euclideanDistance(trainingInstance, testInstance, length):
+        def euclideanDistance(self, trainingInstance, testInstance):
                 distance = 0
-                for i in range(length+1):
+                for i in self.order:
                         distance += pow((trainingInstance[i] - testInstance[i]), 2)
                 return 1- (math.sqrt(distance) *.1)
 
@@ -26,11 +31,6 @@ class feedTesting:
         Converts filename.data into a
         usable trainingSet array
         """
-        def setTraining(self, dataset):
-                temp = []
-                for i in dataset:
-                        temp.append(i["preferences"])
-                self.training = temp
 
         def loadDataSet(self, dataValTotal, filename, trainingSet=[]):
                 with open(filename, 'rb') as csvfile:
@@ -51,61 +51,16 @@ class feedTesting:
         is used due to inefficiencies with index popping.
         """
 
-        def findNeighbors(self, k, edges):
-                distances = []
-                for x in range(len(self.training)):
-                        arrIndex = x
-                        aff = feedTesting.euclideanDistance(self.training[x], self.testInstance, len(self.testInstance)-1)
-                        distances.append((self.training[x], aff))
+        def knn(self, k, distances = {}):
 
-                distances.sort(key=operator.itemgetter(1), reverse = True)
-                neighbors = [[]]
+                for x in self.training:
+                        trainingInstance = x["preferences"]
+                        distances[x["nonprofitId"]] = self.euclideanDistance(trainingInstance, self.testInstance["preferences"])
 
-                iterator = 0
-                for i in range(k):
-                        neighbors[0].append(distances[i])
-                        distances[i] = None
+                sortedDistances = sorted(distances.items(), key=operator.itemgetter(1), reverse = True)
 
-                distancesOrig = distances       
-                for i in range(edges):
-                        newNeighbors = []
-                        distances = []
-                        
-                        for j in range(len(neighbors[i])):
-                                #Removes the previously declared neighbor values before
-                                for x in range(len(distancesOrig)):
-                                        #All distances for both neighbors are saved to the same array, just organized with an additional X value alongside their original Y index
-                                        if distancesOrig[x] != None:
-                                                localAff = feedTesting.euclideanDistance(distancesOrig[x][0], neighbors[i][j][0], len(self.testInstance)-1)
-                                                if i == 0:
-                                                        completeAff = neighbors[0][j][1] * localAff
-                                                else:
-                                                        completeAff = neighbors[i][j][2] * localAff
-                                                distances.append((distancesOrig[x][0], localAff, completeAff, j, x))
-        
-                        distances.sort(key=operator.itemgetter(1), reverse = True)
-
-                        #yIndex marks all already used distance values (reduces overlap)    
-                        excludeIndexes = []
-                        for j in range(len(neighbors[i])):
-                                count = 0
-                                index = 0
-
-                                while count < k:
-                                        
-                                        cont = True
-                                        for l in range(len(excludeIndexes)):
-                                                if distances[index][4] == excludeIndexes[l]:
-                                                        cont = False
-
-                                        if distances[index][3] == j and cont == True:
-                                                newNeighbors.append(distances[index])
-                                                excludeIndexes.append(distances[index][4])
-                                                distancesOrig[distances[index][4]] = None
-                                                count += 1
-                                        index += 1
-
-                        neighbors.append((newNeighbors))
+                neighbors = dict(sortedDistances[0:k])
 
                 return neighbors
+
         

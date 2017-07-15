@@ -25,7 +25,9 @@ class mongo:
 		return self.collection.find_one(targetValues)
 
 	def authenticate(name = None, password = None, source = None, mechanism = 'DEFAULT', **kwargs):
-		db.authenticate(name, password, source, mechanism, **kwargs)
+		self.db.authenticate(name, password, source, mechanism, **kwargs)
 
+	def dropDatabase(self):
+		self.collection.dropDatabase()
 
 

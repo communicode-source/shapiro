@@ -15,3 +15,5 @@ mongo.change_collection("preferences")
 preferences = mongo.find()
 for i in preferences:
 	print (i["preferences"])
+
+mongo.dropDatabase()
