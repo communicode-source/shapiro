@@ -88,7 +88,7 @@ categories = ["parks_and_recreation", "environment1", "science", "wildlife", "pr
               "research", "disease", "fundraising", "finance", "trade", "historical"]
 
 binValues = {
-    "nonprofitId" : 1234,
+    "nonprofitId" : 132142,
     "interests" : [
         "environment1",
         "human_services",
@@ -146,7 +146,7 @@ training = mongo.find()
 
 #feedTesting declaration and method calls
 feed = feed(testingTestInstance, training, order)
-neighbors = feed.knn(k=2)
+neighbors = feed.knn(k=5)
 print "\nNeighbors\n"
 for x in neighbors:
     print x, "\n"

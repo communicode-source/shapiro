@@ -8,11 +8,11 @@ class mongo:
 
 	def __init__(self, database_name, collection_name):
 		client = MongoClient()
-		self.db = client.database_name
-		self.collection = self.db.collection_name
+		self.db = client[database_name]
+		self.collection = self.db[collection_name]
 
 	def change_collection(self, collection_name):
-		self.collection = self.db.collection_name
+		self.collection = self.db[collection_name]
 
 	def insert_one(self, post):
 		post_id = self.collection.insert_one(post).inserted_id

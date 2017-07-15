@@ -17,9 +17,7 @@ class feed:
                 self.training = training
                 self.testInstance = testInstance
 
-#STATIC METHODS
-
-        #sqr(sums of (differences squared))        
+       
         def euclideanDistance(self, trainingInstance, testInstance):
                 distance = 0
                 for i in self.order:
@@ -44,18 +42,17 @@ class feed:
                 self.training = trainingSet
                        
         """
-        Finds neighbors(under the k value) with the testInstance
-        provided via the constructor. First edge removes (pops)
-        the given index value from the distances array. When the
-        second edge arrives, a method of index recording/ignoring
-        is used due to inefficiencies with index popping.
+        Finds "k" amount of neighbors using
+        data from self.training and self.testInstance. 
+        By utilizing the euclideanDistance method, the knn
+        function can accurately determine the local affinity
+        between the testInstance and the trainingInstance, allowing
+        for useful results.
         """
 
         def knn(self, k, distances = {}):
-
                 for x in self.training:
-                        trainingInstance = x["preferences"]
-                        distances[x["nonprofitId"]] = self.euclideanDistance(trainingInstance, self.testInstance["preferences"])
+                        distances[x["nonprofitId"]] = self.euclideanDistance(x["preferences"], self.testInstance["preferences"])
 
                 sortedDistances = sorted(distances.items(), key=operator.itemgetter(1), reverse = True)
 
