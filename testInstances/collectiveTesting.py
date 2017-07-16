@@ -9,8 +9,6 @@ import json
 
 #variables
 
-order = ["environmentalism", "human_services", "stem", "health", "the_arts", "education", "business", "urban_planning", "international", "legal"]
-
 collections = { 'environmentalism' : { 'environment' : .4,
                                        'wildlife' : .1,
                                        'preservation' : .1,
@@ -80,7 +78,7 @@ collections = { 'environmentalism' : { 'environment' : .4,
                            'criminal' : .2 }
                 }
 
-categories = ["parks_and_recreation", "environment1", "science", "wildlife", "preservation", "human_services",
+categories = ["parks_and_recreation", "environment", "science", "wildlife", "preservation", "human_services",
               "civil_rights", "arts_and_culture", "education", "engineering", "mathematics", "technology",
               "food_services", "urban_management", "business_and_marketing", "international", "criminal", "athletics",
               "internet", "health", "public_safety", "youth_aid", "construction", "tv_and_media",
@@ -90,7 +88,7 @@ categories = ["parks_and_recreation", "environment1", "science", "wildlife", "pr
 binValues = {
     "nonprofitId" : 132143213,
     "interests" : [
-        "environment1",
+        "environment",
         "human_services",
         "civil_rights",
         "arts_and_culture",
@@ -102,6 +100,7 @@ binValues = {
         "tv_and_media",
         "religion",
         "fundraising",
+        "science"
    ]
 }
 
@@ -123,16 +122,14 @@ testingTestInstance = {
   "nonprofitId" : 123241
 }
 
-testInstance = [2,0,0,0,1,0,0,0,0,1]
-
 #preferenceConversion declaration and method calls
 prefconv = prefConv(collections, binValues)
-print "Binary Values\n"
-print binValues, "\n"
+print("Binary Values\n")
+print(binValues, "\n")
 
 variables = prefconv.weightsToVals()
-print "Converted Variables\n"
-print variables
+print("Converted Variables\n")
+print(variables)
 
 #prefConv.transferData("testfile.data", variables, "data.json")
 
@@ -141,8 +138,8 @@ mongo.insert_one(variables)
 training = mongo.find()
 
 #feedTesting declaration and method calls
-feed = feed(testingTestInstance, training, order)
+feed = feed(testingTestInstance, training)
 neighbors = feed.knn(k=5)
-print "\nNeighbors\n"
+print("\nNeighbors\n")
 for x in neighbors:
-    print "NonprofitId: {}, Affinity: {}".format(x, neighbors[x])
+    print("NonprofitId: {}, Affinity: {}".format(x, neighbors[x]))

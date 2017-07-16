@@ -1,4 +1,3 @@
-import csv
 import math
 import json
 
@@ -17,8 +16,13 @@ class prefConv:
 
     @staticmethod
     def loadJson(obj):
-        jsonStr = obj.decode("utf-8")
-        return json.loads(jsonStr)
+        return json.loads(obj)
+
+
+    def formatInterests(self, values, submission = {}):
+        submission["nonprofitId"] = self.interests["nonprofitId"]
+        submission["preferences"] = values
+        return submission
 
     """
     Following 6 methods are involved in the findExternalities process.
@@ -89,12 +93,6 @@ class prefConv:
             return self.collections[collection][variable] + self.findExternalities(collection)
         elif variable != str(interest):
             return 0
-
-    def formatInterests(self, values):
-        submission = {}
-        submission["nonprofitId"] = self.interests["nonprofitId"]
-        submission["preferences"] = values
-        return submission
 
 
 

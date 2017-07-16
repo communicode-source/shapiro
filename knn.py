@@ -1,4 +1,3 @@
-import csv
 import math
 import operator
 
@@ -7,22 +6,20 @@ class feed:
     
     """
     GLOBAL VARIABLES: 
-    order - List
     training - Dict
     testInstance - Dict
     """
 
-    def __init__(self, testInstance, training, order):
-        self.order = order
+    def __init__(self, testInstance, training):
         self.training = training
         self.testInstance = testInstance
 
    
     def euclideanDistance(self, trainingInstance, testInstance):
         distance = 0
-        for collection in self.order:
+        for collection in trainingInstance:
                 distance += pow((trainingInstance[collection] - testInstance[collection]), 2)
-        return 1 - (math.sqrt(distance) *.1)
+        return 1 - (math.sqrt(distance) * .1)
                    
     """
     Finds "k" amount of neighbors using
